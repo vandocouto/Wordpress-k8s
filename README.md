@@ -244,7 +244,8 @@ spec:
     name: wordpress
 ```
 Passo 8 - Ingress - wordpress https
-Caso não tenha o ingress já configurado no seu Cluster Kubernetes, basta seguir a documentação do ingress: [Ingress com Nginx](https://github.com/nginxinc/kubernetes-ingress/blob/master/docs/installation.md) 
+
+Documentação do ingress: [Ingress com Nginx](https://github.com/nginxinc/kubernetes-ingress/blob/master/docs/installation.md) 
 
 ```bash
 apiVersion: extensions/v1beta1  
