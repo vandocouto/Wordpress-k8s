@@ -1,11 +1,24 @@
 # Wordpress k8s
 ![enter image description here](https://lh3.googleusercontent.com/NCCEs593gaqGnWHOJzZkzbWbIASLS3rLecls_FIvjUI8aLu_NSh4OV7BGIKg7dEvHMQYC3WX7hlfgA "wp")
 
-### Clone do projeto:
+## Implantando o CMS Wordpress no Kubernetes
+
+Este tutorial explica passo a passo a implantação do CMS Wordpress em um Cluster [Kubernetes](https://kubernetes.io/) com exposição do https através do [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+
+### Pré-requisitos para executar o passo a passo:
+
+* Cluster Kubernetes
+* Domain Name Server
+* Git
+* Letsencrypt
+* Nginx Ingress
+
+### Projeto:
 ```bash
 git clone https://github.com/vandocouto/Wordpress-k8s.git
 ```
 ### Passo a Passo:
+
 Passo 1 - Liste todos os labels do Cluster Kubernetes
 ```bash
 kubectl get nodes --show-labels
@@ -23,7 +36,11 @@ Passo 3 - Crie o diretório /storage no mesmo node que recebeu o novo label WPSt
 mkdir -p /storage
 ```
 Passo 4 - Secret
-Obs: Informe o .crt .key codificado em base64 + Senha do MySQL codificada também em base64 
+
+Obs: Informe o .crt .key codificado em base64 + Senha do MySQL codificada também em base64
+
+**Senha atual do mysql-pass: admin**
+
 ```bash
 apiVersion: v1
 kind: Secret
