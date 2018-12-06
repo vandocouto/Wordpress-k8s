@@ -1,3 +1,11 @@
+# Wordpress k8s
+![enter image description here](https://lh3.googleusercontent.com/NCCEs593gaqGnWHOJzZkzbWbIASLS3rLecls_FIvjUI8aLu_NSh4OV7BGIKg7dEvHMQYC3WX7hlfgA "wp")
+
+### Clone do projeto:
+```bash
+git clone https://github.com/vandocouto/Wordpress-k8s.git
+```
+### Passo a Passo:
 Passo 1 - Liste todos os labels do Cluster Kubernetes
 ```bash
 kubectl get nodes --show-labels
