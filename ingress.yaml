@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: wordpress
+  namespace: wp
+  annotations:
+    ingress.kubernetes.io/proxy-body-size: 100m
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - blog.dominio.com.br
+    secretName: wordpress-tls
+  rules:
+  - host: blog.dominio.com.br
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: wordpress
+          servicePort: 80

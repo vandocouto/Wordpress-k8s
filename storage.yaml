@@ -1,0 +1,59 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mysql
+  labels:
+    type: local
+spec:
+  storageClassName: mysql
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/storage/wordpress/mysql"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysql
+  namespace: wp
+  labels:
+   name: mysql
+spec:
+  storageClassName: mysql
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: wordpress
+  labels:
+    type: local
+spec:
+  storageClassName: wordpress
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/storage/wordpress/www"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: wordpress
+  namespace: wp
+  labels:
+   name: wordpress
+spec:
+  storageClassName: wordpress
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi

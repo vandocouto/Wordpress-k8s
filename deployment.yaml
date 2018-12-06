@@ -1,0 +1,84 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: wp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: mysql
+  template:
+    metadata:
+      labels:
+        name: mysql
+    spec:
+      containers:
+      - image:  mysql:5.7
+        imagePullPolicy: Always
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        - name: MYSQL_USER
+          value: admin
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        name: mysql
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+         - mountPath: /var/lib/mysql
+           name: mysql
+      volumes:
+       - name: mysql
+         persistentVolumeClaim:
+          claimName: mysql
+      nodeSelector:
+        WPStorage: wordpress
+      restartPolicy: Always
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: wordpress
+  namespace: wp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: wordpress
+  template:
+    metadata:
+      labels:
+        name: wordpress
+    spec:
+      containers:
+      - image: wordpress:latest
+        imagePullPolicy: Always
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: mysql
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+           secretKeyRef:
+            name: mysql-pass
+            key: password
+        name: wordpress
+        ports:
+        - containerPort: 80
+        volumeMounts:
+         - mountPath: /var/www/html
+           name: wordpress
+      volumes:
+       - name: wordpress
+         persistentVolumeClaim:
+          claimName: wordpress
+      nodeSelector:
+       WPStorage: wordpress
+      restartPolicy: Always
